@@ -14,6 +14,7 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest"
 	},
+	"type": "module",
 	"dependencies": {
 		"@aurowallet/mina-provider": "^1.0.5",
 		"chain": "workspace:*",
@@ -27,12 +28,16 @@
 		"tailwind-merge": "^2.0.0"
 	},
 	"peerDependencies": {
-		"@proto-kit/common": "latest",
-		"@proto-kit/library": "latest",
-		"@proto-kit/module": "latest",
-		"@proto-kit/protocol": "latest",
-		"@proto-kit/sdk": "latest",
-		"@proto-kit/sequencer": "latest",
+		"@proto-kit/api": "*",
+		"@proto-kit/common": "*",
+		"@proto-kit/deployment": "*",
+		"@proto-kit/library": "*",
+		"@proto-kit/module": "*",
+		"@proto-kit/persistance": "*",
+		"@proto-kit/protocol": "*",
+		"@proto-kit/sdk": "*",
+		"@proto-kit/sequencer": "*",
+		"@proto-kit/indexer": "*",
 		"o1js": "1.6.0",
 		"tsyringe": "^4.7.0"
 	},
@@ -65,6 +70,5 @@
 		"vite-plugin-node-polyfills": "^0.22.0",
 		"vite-plugin-top-level-await": "^1.4.4",
 		"vitest": "^2.0.0"
-	},
-	"type": "module"
+	}
 }
