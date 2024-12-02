@@ -2,6 +2,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, type ViteDevServer, type PreviewServer, type PluginOption } from 'vite';
 import topLevelAwait from 'vite-plugin-top-level-await';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import houdini from 'houdini/vite';
 
 function crossOriginIsolationPlugin() {
 	return {
@@ -25,6 +26,7 @@ function crossOriginIsolationPlugin() {
 
 export default defineConfig({
 	plugins: [
+		houdini(),
 		sveltekit(),
 		topLevelAwait({
 			promiseExportName: '__tla',
