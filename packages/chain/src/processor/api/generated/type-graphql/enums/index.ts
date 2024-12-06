@@ -1,5 +1,12 @@
+export { AuctionType } from "./AuctionType";
 export { BalanceScalarFieldEnum } from "./BalanceScalarFieldEnum";
+export { BidScalarFieldEnum } from "./BidScalarFieldEnum";
 export { BlockScalarFieldEnum } from "./BlockScalarFieldEnum";
+export { DutchAuctionScalarFieldEnum } from "./DutchAuctionScalarFieldEnum";
+export { EnglishAuctionScalarFieldEnum } from "./EnglishAuctionScalarFieldEnum";
+export { NftCollectionScalarFieldEnum } from "./NftCollectionScalarFieldEnum";
+export { NftScalarFieldEnum } from "./NftScalarFieldEnum";
+export { NullsOrder } from "./NullsOrder";
 export { QueryMode } from "./QueryMode";
 export { SortOrder } from "./SortOrder";
 export { TransactionIsolationLevel } from "./TransactionIsolationLevel";

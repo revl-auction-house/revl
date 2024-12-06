@@ -30,3 +30,86 @@ model Balance {
 
   @@id([height, address])
 }
+
+model nftCollection {
+  address String @id
+  name    String?
+  description String?
+  nftCount   Int @default(0)
+  liveAuctionCount Int @default(0)
+  floorPrice String?
+  volume String?
+  nfts    nft[]
+}
+
+model nft {
+  id               Int
+  collection       nftCollection @relation(fields: [collectionAddress], references: [address])
+  collectionAddress String
+  owner            String
+  locked           Boolean
+  dataHash         String
+  data             String?
+  name             String?
+  imgUrl           String?
+  lastAuctionId    String?
+  lastAuctionType  AuctionType?
+
+  // reverse relations
+  englishAuctions  EnglishAuction[]
+  dutchAuctions    DutchAuction[]
+
+  @@id([collectionAddress, id])
+  @@index([owner])
+}
+
+enum AuctionType {
+  ENGLISH
+  DUTCH
+}
+
+model Bid {
+  id          Int @id @default(autoincrement())
+  bidder      String
+  amount      String
+  timestamp   DateTime @default(now()) // unix timestamp
+  auction     EnglishAuction @relation(fields: [auctionId], references: [id])
+  auctionId   String
+
+  @@index([auctionId])
+}
+
+model EnglishAuction {
+  id            String  @id
+  nft           nft     @relation(fields: [nftCollection, nftId], references: [collectionAddress, id])
+  nftCollection String
+  nftId         Int
+  creator       String
+  winner        String?
+  ended         Boolean
+  startTime     Int     // in Block time
+  endTime       Int?    // in Block time
+
+  bids          Bid[]
+
+  @@index([nftCollection, nftId])
+}
+
+model DutchAuction {
+  id            String  @id
+  nft           nft     @relation(fields: [nftCollection, nftId], references: [collectionAddress, id])
+  nftCollection String
+  nftId         Int
+  creator       String
+  winner        String?
+  ended         Boolean
+  startTime     Int     // in Block time
+  endTime       Int?    // in Block time
+
+  startPrice    String
+  minPrice      String
+  decayRate     String
+  finalPrice    String?
+
+  @@index([nftCollection, nftId])
+}

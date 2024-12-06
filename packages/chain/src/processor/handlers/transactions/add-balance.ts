@@ -19,7 +19,7 @@ export const handleBalancesAddBalance = async (
   );
 
   // @ts-expect-error
-  const [tokenId, address, amount]: [TokenId, PublicKey, Balance] =
+  const [address, amount]: [PublicKey, Balance] =
     await parameterDecoder.decode(tx.tx.argsFields, tx.tx.auxiliaryData);
 
   const currentAddressBalance = await client.balance.findFirst({
