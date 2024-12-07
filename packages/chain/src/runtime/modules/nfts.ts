@@ -5,7 +5,7 @@ import {
   state,
 } from "@proto-kit/module";
 import { StateMap, assert } from "@proto-kit/protocol";
-import { Bool, Field, Provable, PublicKey, Struct, UInt32 } from "o1js";
+import { Bool, Encoding, Field, Provable, PublicKey, Struct, UInt32 } from "o1js";
 
 export class NFTKey extends Struct({
   collection: PublicKey,
@@ -16,9 +16,34 @@ export class NFTKey extends Struct({
   }
 }
 
+export class FixedString extends Struct({
+  data: [Field, Field, Field, Field],
+  length: UInt32,
+}) {
+  public static fromString(str: string) {
+    const data = Encoding.stringToFields(str);
+    if (data.length > 4) {
+      throw new Error("String too long");
+    }
+    const padding = Array(4 - data.length).fill(Field(0));
+    return new FixedString({ data: [...data, ...padding], length: new UInt32(data.length) });
+  }
+
+  public static from(
+    data: [Field, Field, Field, Field],
+    length: UInt32
+  ) {
+    return new FixedString({ data, length });
+  }
+
+  public toString() {
+    return Encoding.stringFromFields(this.data.slice(0, Number(this.length.toBigint())));
+  }
+}
+
 export class NFTEntity extends Struct({
   owner: PublicKey,
-  metadata: Field, // ipfs hash
+  metadata: FixedString, // ipfsHash,url, ...
   locked: Bool,
 }) {}
 
@@ -31,7 +56,7 @@ export class NFT extends RuntimeModule<{}> {
   @state() public nonces = StateMap.from<PublicKey, UInt32>(PublicKey, UInt32);
 
   @runtimeMethod()
-  public async mint(to: PublicKey, metadata: Field) {
+  public async mint(to: PublicKey, metadata: FixedString) {
     const minter = this.transaction.sender.value;
     const { value: minterNonce } = await this.nonces.get(minter);
     const key = NFTKey.from(minter, minterNonce);

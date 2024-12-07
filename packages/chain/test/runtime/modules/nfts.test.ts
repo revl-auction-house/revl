@@ -1,6 +1,6 @@
 import { TestingAppChain } from "@proto-kit/sdk";
 import { Poseidon, PrivateKey, UInt32, Field } from "o1js";
-import { NFT, NFTKey } from "../../../src/runtime/modules/nfts";
+import { FixedString, NFT, NFTKey } from "../../../src/runtime/modules/nfts";
 import { log } from "@proto-kit/common";
 import { Balances } from "../../../src/runtime/modules/balances";
 
@@ -36,7 +36,7 @@ describe("NFT", () => {
     const nft = appChain.runtime.resolve("NFT");
 
     // Create sample NFT metadata
-    const nftMetadata = Field(123456); // Simplified metadata for testing
+    const nftMetadata = FixedString.fromString("ipfs://Qm...");
 
     // Test minting NFTs
     appChain.setSigner(minterPrivateKey);

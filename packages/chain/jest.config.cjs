@@ -7,7 +7,7 @@ module.exports = {
     // because we run tests from within ./packages/<package_name>/
     rootDir: './',
     moduleDirectories: ["node_modules", "src", "test"],
-    testPathIgnorePatterns: ["dist"],
+    testPathIgnorePatterns: ["dist", "scripts"],
     extensionsToTreatAsEsm: ['.ts'],
     testTimeout: 30_000,
     setupFilesAfterEnv: ["jest-expect-message"],

@@ -1,19 +1,9 @@
 import "reflect-metadata";
 import {
-  BlockStorageNetworkStateModule,
-  InMemorySigner,
   TestingAppChain,
 } from "@proto-kit/sdk";
 import {
-  BlockProducerModule,
-  InMemoryDatabase,
-  LocalTaskQueue,
-  LocalTaskWorkerModule,
-  ManualBlockTrigger,
   ModuleQuery,
-  NoopBaseLayer,
-  PrivateMempool,
-  SettlementModule,
 } from "@proto-kit/sequencer";
 import {
   Poseidon,
@@ -23,7 +13,7 @@ import {
   PublicKey,
   Field,
 } from "o1js";
-import { NFTKey, NFT } from "../../../../src/runtime/modules/nfts";
+import { NFTKey, NFT, FixedString } from "../../../../src/runtime/modules/nfts";
 import { EnglishAuction, EnglishAuctionModule } from "../../../../src/runtime/modules/Auctions/EnglishAuction";
 import { log } from "@proto-kit/common";
 import { Balances, GAS_TOKEN_ID } from "../../../../src/runtime/modules/balances";
@@ -51,14 +41,7 @@ describe("EnglishAuction", () => {
   let auctionQuery: ModuleQuery<EnglishAuction>;
   
   const mintTestNFT = async (owner: PrivateKey) => {
-    const nftMetadata = Poseidon.hash(
-      Encoding.stringToFields(
-        JSON.stringify({
-          name: "testNFT",
-          uri: "...",
-        })
-      )
-    );
+    const nftMetadata = FixedString.fromString("ipfs://Qm...");
     
     appChain.setSigner(owner);
     const tx = await appChain.transaction(owner.toPublicKey(), async () => {

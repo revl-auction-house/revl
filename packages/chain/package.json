@@ -20,6 +20,7 @@
     "test:watch": "npm run test --watchAll",
     "build": "pnpm run prisma:generate && tsc -p tsconfig.json",
     "start": "pnpm run sequencer:start",
+    "script:test": "node --loader ts-node/esm --experimental-vm-modules --experimental-wasm-modules --es-module-specifier-resolution=node ./scripts/test.ts",
     "sequencer:start": "node --loader ts-node/esm --experimental-vm-modules --experimental-wasm-modules --es-module-specifier-resolution=node ./dist/start.js start \"./environments/$PROTOKIT_ENV_FOLDER/chain.config.js\" $1",
     "indexer:start": "node --loader ts-node/esm --experimental-vm-modules --experimental-wasm-modules --es-module-specifier-resolution=node ./dist/start.js start \"./environments/$PROTOKIT_ENV_FOLDER/indexer.config.js\" $1",
     "processor:start": "node --loader ts-node/esm --experimental-vm-modules --experimental-wasm-modules --es-module-specifier-resolution=node ./dist/start.js start \"./environments/$PROTOKIT_ENV_FOLDER/processor.config.js\" $1",

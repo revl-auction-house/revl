@@ -15,7 +15,7 @@ export const handleNFTMint = async (
   const parameterDecoder = MethodParameterEncoder.fromMethod(module, "mint");
 
   // @ts-expect-error
-  const [to, hash]: [PublicKey, Field] = await parameterDecoder.decode(
+  const [to, metadata]: [PublicKey, FixedString] = await parameterDecoder.decode(
     tx.tx.argsFields,
     tx.tx.auxiliaryData
   );
@@ -53,7 +53,7 @@ export const handleNFTMint = async (
       collectionAddress: sender.toBase58(),
       owner: to.toBase58(),
       locked: false,
-      dataHash: hash.toString(),
+      dataHash: metadata.toString(),
       data: "", // TODO
     }
   });
@@ -62,7 +62,7 @@ export const handleNFTMint = async (
     NFT minted:
     - collection: ${sender.toBase58()}
     - to: ${to.toBase58()}
-    - hash: ${hash.toString()}
+    - hash: ${metadata.toString()}
   `);
 };
 
