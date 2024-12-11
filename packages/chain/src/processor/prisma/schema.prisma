@@ -48,8 +48,8 @@ model nft {
   collectionAddress String
   owner            String
   locked           Boolean
-  dataHash         String
-  data             String?
+  metadata         String // string stored onchain, like urls
+  data             String? // fetched from metadata
   name             String?
   imgUrl           String?
   lastAuctionId    String?
