@@ -26,6 +26,8 @@ export class EnglishAuctionModule extends AuctionModule<EnglishAuction> {
     isOdd: Bool(false),
   });
 
+  @state() public records: StateMap<Field, EnglishAuction>;
+
   public constructor(
     @inject("NFT") public nfts: NFT,
     @inject("Balances") public balances: Balances

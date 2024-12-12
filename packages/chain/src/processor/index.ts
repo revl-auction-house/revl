@@ -29,7 +29,10 @@ export const modules = {
 };
 
 export const config: ModulesConfig<typeof modules> = {
-  HandlersExecutor: {},
+  HandlersExecutor: {
+    maxWait: 10 * 1000,
+    timeout: 10 * 1000,
+  },
   BlockFetching: {
     url: `http://${process.env.PROTOKIT_PROCESSOR_INDEXER_GRAPHQL_HOST!}:${process.env.PROTOKIT_INDEXER_GRAPHQL_PORT!}`,
   },
